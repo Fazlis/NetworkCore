@@ -4,12 +4,12 @@ import Foundation
 import SwiftyJSON
 
 
-protocol NetworkClientUseCase {
+public protocol NetworkClientUseCase: AnyObject {
     func sendRequest<T>(request: NetworkRequest, completion: @escaping NetworkResponse<T>)
 }
 
-final class NetworkClient: NSObject, NetworkClientUseCase {
-    func sendRequest<T: Codable>(request: NetworkRequest, completion: @escaping NetworkResponse<T>) where T: Codable {
+public final class NetworkClient: NSObject, NetworkClientUseCase {
+    public func sendRequest<T: Codable>(request: NetworkRequest, completion: @escaping NetworkResponse<T>) where T: Codable {
         guard let url = URL(string: request.urlString) else {
             completion(.failure(.invalidURL))
             return

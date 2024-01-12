@@ -4,4 +4,4 @@
 import Foundation
 
 
-typealias NetworkResponse<T: Codable> = (Result<T, NetworkError>) -> Void
+public typealias NetworkResponse<T: Codable> = (Result<T, NetworkError>) -> Void

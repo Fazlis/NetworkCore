@@ -8,19 +8,19 @@
 import Foundation
 
 
-enum HTTPMethod: String {
+public enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
 }
 
-protocol NetworkRequest {
+public protocol NetworkRequest {
     var urlString: String { get }
     var method: HTTPMethod { get }
     var parameters: [String: Any]? { get }
     var headers: [String: String]? { get }
 }
 
-enum NetworkError: Error {
+public enum NetworkError: Error {
     case invalidURL
     case requestFailed(Error)
     case invalidResponse

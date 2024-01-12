@@ -5,19 +5,30 @@ import PackageDescription
 
 let package = Package(
     name: "EONetworkCore",
+    
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "EONetworkCore",
-            targets: ["EONetworkCore"]),
+            targets: ["EONetworkCore"]
+        )
     ],
+    
+    dependencies: [
+        .package(
+            url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
+            from: "4.0.0"
+        )
+    ],
+    
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "EONetworkCore"),
+            name: "EONetworkCore",
+            dependencies: ["SwiftyJSON"]
+        ),
+        
         .testTarget(
             name: "EONetworkCoreTests",
-            dependencies: ["EONetworkCore"]),
+            dependencies: ["EONetworkCore"]
+        ),
     ]
 )
