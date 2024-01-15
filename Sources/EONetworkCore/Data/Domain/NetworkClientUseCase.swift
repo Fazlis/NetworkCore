@@ -16,7 +16,7 @@ public final class NetworkClient: NSObject, NetworkClientUseCase {
         }
 
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = request.method.rawValue
+        urlRequest.httpMethod = request.method
 
         
         request.headers?.forEach { key, value in
