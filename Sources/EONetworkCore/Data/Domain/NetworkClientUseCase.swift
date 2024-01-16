@@ -11,6 +11,10 @@ public protocol NetworkClientUseCase: AnyObject {
 public final class NetworkClient: NSObject, NetworkClientUseCase {
     public func sendRequest<T: Codable>(request: NetworkRequest, completion: @escaping NetworkResponse<T>) where T: Codable {
         print(request.urlString)
+        print(request.headers)
+        print(request.method)
+        print(request.parameters)
+        
         guard let url = URL(string: request.urlString) else {
             completion(.failure(.invalidURL))
             return
