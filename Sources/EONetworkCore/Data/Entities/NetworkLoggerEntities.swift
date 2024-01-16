@@ -17,13 +17,15 @@ struct Logger {
         startRequest = Date().timeIntervalSince1970
         let url = request.url?.absoluteString ?? ""
         
-        debugPrint("""
+        #if DEBUG
+        print("""
             ✴️⬇️
             URL: \(url);
             BODY: \(String(data: request.httpBody ?? Data(), encoding: .utf8) ?? "NO BODY DATA");
             HEADERS: \(request.allHTTPHeaderFields ?? [:]);
             ⬆️✴️
         """)
+        #endif
         
     }
     
@@ -34,13 +36,15 @@ struct Logger {
         let json = try? JSONDecoder().decode(JSON.self, from: data)
         let jsonString = json?.rawString(.utf8, options: .prettyPrinted) ?? ""
         
-        debugPrint("""
+        #if DEBUG
+        print("""
             \(icon)⬇️
             URL: \(urlStr);
             STATUS CODE: \(statusCode);
             JSON: \(jsonString)
             ⬆️\(icon)
         """)
+        #endif
         
         let interval = Double(round(1000 * (endRequest - startRequest)))
     }
@@ -54,8 +58,10 @@ struct Logger {
     }
     
     static func printDecodingError(error: Error) {
-        debugPrint("""
+        #if DEBUG
+        print("""
             ❗️JSON decode error. Description: \(error.localizedDescription)❗️
         """)
+        #endif
     }
 }
