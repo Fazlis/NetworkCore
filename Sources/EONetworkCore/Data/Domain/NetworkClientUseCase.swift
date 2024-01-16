@@ -20,21 +20,24 @@ public final class NetworkClient: NSObject, NetworkClientUseCase {
                     return
                 }
                 
-                guard let httpResponse = response as? HTTPURLResponse else {
+                guard let httpResponse = response as? HTTPURLResponse,
+                      let data = data else {
                     completion(.failure(.invalidResponse))
                     return
                 }
                 
-                if (200..<300).contains(httpResponse.statusCode), let data = data {
-                    do {
-                        let decodedObject = try JSONDecoder().decode(T.self, from: data)
+                do {
+                    let decodedObject = try JSONDecoder().decode(T.self, from: data)
+                    
+                    if (200..<300).contains(httpResponse.statusCode) {
                         completion(.success(decodedObject))
-                    } catch {
-                        Logger.printDecodingError(error: error)
-                        completion(.failure(.invalidData))
+                    } else {
+                        completion(.failure(.failedResponse(decodedObject)))
                     }
-                } else {
-                    completion(.failure(.invalidResponse))
+                    
+                } catch {
+                    Logger.printDecodingError(error: error)
+                    completion(.failure(.requestFailed(error)))
                 }
             }
             task.resume()
